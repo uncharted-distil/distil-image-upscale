@@ -1,5 +1,4 @@
-#include "models.c"
-#include "macros.c"
+#include "entry_functions.h"
 #include "utility.c"
 #include <stdio.h>
 
@@ -7,7 +6,7 @@
 Model* model = NULL;
 ModelInfo* modelInfo = NULL;
 
-EXPORTED void initialize(const char* errorMsg){
+void initialize(const char* errorMsg){
     // create model
     model = newModel();
     // get NoiseCancel model info (currently only supported model)
@@ -28,7 +27,7 @@ EXPORTED void initialize(const char* errorMsg){
     }
 }
 // on success call freeOutputData to avoid memory leak, returns null and errorMsg if errors
-EXPORTED OutputData* runModel(const char* errorMsg, DataInfo dataInfo){
+OutputData* runModel(const char* errorMsg, DataInfo dataInfo){
     // create input and output tensor on heap
     TF_Tensor** inputTensor=(TF_Tensor**)malloc(sizeof(TF_Tensor*) * modelInfo->numInputNodes);
     TF_Tensor* outputTensor = (TF_Tensor*)malloc(sizeof(TF_Tensor*));
@@ -63,19 +62,19 @@ EXPORTED OutputData* runModel(const char* errorMsg, DataInfo dataInfo){
     outputData->buffer = (float *)TF_TensorData(outputTensor);
     outputData->outputTensor = outputTensor;
     outputData->numOfDimensions = TF_NumDims(outputTensor);
-    outputData->dimension = (float *)malloc(sizeof(float) * outputData->numOfDimensions);
+    outputData->dimension = (int64_t *)malloc(sizeof(int64_t) * outputData->numOfDimensions);
     for(unsigned int i=0; i < outputData->numOfDimensions; ++i){
         outputData->dimension[i] = TF_Dim(outputTensor, i);
     }
     return outputData;
 }
 
-EXPORTED void freeOutputData(OutputData *outputData){
+void freeOutputData(OutputData *outputData){
     freeTensor(&outputData->outputTensor, 1);
     free(outputData->dimension);
     free(outputData);
 }
 
-EXPORTED void cleanup(){
+void cleanup(){
     freeModel(model);
 }

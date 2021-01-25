@@ -12,7 +12,8 @@ This repository contains the source code to compile an image upscale dynamic lib
 Make sure Tensorflow c is installed on your machine then link to that library when compiling (similar to below).
 
 ```console
-gcc -I/usr/local/include -L/usr/local/lib main.c -ltensorflow -o main
+gcc -I /usr/local/include/ -L /usr/local/lib/ -Wall -fPIC -C src/entry_functions.c -ltensorflow -o entry_functions.o
+gcc -shared -o image-upscale.so entry_functions.o
 ```
 
 # Credits
