@@ -62,3 +62,10 @@ typedef struct Model{
     // output node for the graph
     TF_Output* output;
 }Model;
+
+typedef struct OutputData{
+    float* buffer;
+    TF_Tensor* outputTensor;
+    unsigned numOfDimensions;
+    int64_t* dimension;
+}OutputData;
