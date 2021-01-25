@@ -12,7 +12,7 @@ const char *noiseCancelNodeNames[2]={
         };
 int64_t noiseCancelDims[1]={1}; 
 DataInfo noiseCancelDataInfo[1] = {{
-    data:"./models/noice_cancel/variables/variables",
+    data:"./models/noise_cancel/variables/variables",
     dataSize: 42,
     dataType: TF_STRING,
     numberOfDimensions: 1,

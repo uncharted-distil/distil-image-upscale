@@ -31,7 +31,7 @@ EXPORTED void initialize(const char* errorMsg){
 EXPORTED OutputData* runModel(const char* errorMsg, DataInfo dataInfo){
     // create input and output tensor on heap
     TF_Tensor** inputTensor=(TF_Tensor**)malloc(sizeof(TF_Tensor*) * modelInfo->numInputNodes);
-    TF_Tensor* outputTensor = malloc(sizeof(TF_Tensor*));
+    TF_Tensor* outputTensor = (TF_Tensor*)malloc(sizeof(TF_Tensor*));
     // create tensors for all the static data required for models
     for(unsigned int i=0; i < modelInfo->numStaticInputData; ++i){
         TFInfo check = dataInfoToTensor(&inputTensor, &modelInfo->staticInputData[i], model->status, i);

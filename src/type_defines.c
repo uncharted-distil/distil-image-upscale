@@ -63,9 +63,14 @@ typedef struct Model{
     TF_Output* output;
 }Model;
 
+// OutputData contains all the necessary information to reconstruct the image
 typedef struct OutputData{
+    // buffer to contain the data
     float* buffer;
+    // output tensor here for free call
     TF_Tensor* outputTensor;
+    // number of dimensions
     unsigned numOfDimensions;
+    // shape of the data
     int64_t* dimension;
 }OutputData;
