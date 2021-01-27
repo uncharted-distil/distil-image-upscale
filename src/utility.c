@@ -38,7 +38,15 @@ TFInfo dataInfoToTensor(TF_Tensor*** inputTensor, DataInfo* dataInfo, TF_Status*
     &NoOpDeallocator,
     0);
     if(inputTensor[0][index] == NULL){
-        return newTFInfo(status, TF_ABORTED, "Input tensor could not be created");
+        char buffer[256];
+        sprintf(buffer, "Input tensor could not be created. numDims: %i, dataSize: %i, dims:[%i,%i,%i,%i]", 
+        (int)dataInfo->numberOfDimensions, 
+        (int)dataInfo->dataSize,
+        (int)dataInfo->dimensions[0],
+        (int)dataInfo->dimensions[1],
+        (int)dataInfo->dimensions[2],
+        (int)dataInfo->dimensions[3]);
+        return newTFInfo(status, TF_ABORTED, buffer);
     }
     return newTFInfo(status, TF_OK, "");
 }

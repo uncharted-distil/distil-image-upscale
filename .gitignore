@@ -1,2 +1,5 @@
 .vscode/
 *.out
+*.a
+*.o
+*.so

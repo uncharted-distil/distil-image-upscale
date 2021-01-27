@@ -70,7 +70,7 @@ typedef struct OutputData{
     // output tensor here for free call
     TF_Tensor* outputTensor;
     // number of dimensions
-    unsigned numOfDimensions;
+    unsigned int numOfDimensions;
     // shape of the data
     int64_t* dimension;
 }OutputData;
