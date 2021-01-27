@@ -15,7 +15,8 @@ Make sure Tensorflow c is installed on your machine then link to that library wh
 gcc -I /usr/local/include/ -L /usr/local/lib/ -Wall -fPIC -c src/entry_functions.c -ltensorflow -o entry_functions.o
 gcc -shared -o image-upscale.so entry_functions.o
 ```
-
+# Notes
+> The data supplied through the InputData.data void pointer MUST BE CONTIGUOUS MEMORY. Arrays of pointers will not ingest properly.
 # Credits
 
 This repository is a c binding of the work image-super-resolution.
