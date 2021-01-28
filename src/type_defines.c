@@ -67,8 +67,6 @@ typedef struct Model{
 typedef struct OutputData{
     // buffer to contain the data
     float* buffer;
-    // output tensor here for free call
-    TF_Tensor* outputTensor;
     // number of dimensions
     unsigned int numOfDimensions;
     // shape of the data

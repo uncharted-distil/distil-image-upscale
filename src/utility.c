@@ -19,7 +19,9 @@ TFInfo newTFInfo(TF_Status* status, TF_Code code, const char* msg){
 }
 /******************Data & Model Runtime*****************/
 // noOperation function to disable tensorflow from deleting data memory, this responsibility is left to us
-void NoOpDeallocator(void* data, size_t a, void* b) {}
+void NoOpDeallocator(void* data, size_t a, void* b) {
+    free(data);
+}
 
 // loads model from directory
 TFInfo loadModel(Model* model, const char* modelDirectory, const char* tags){
@@ -29,15 +31,10 @@ TFInfo loadModel(Model* model, const char* modelDirectory, const char* tags){
     return (TFInfo){code:TF_GetCode(model->status), status:model->status};  
 }
 
-TFInfo dataInfoToTensor(TF_Tensor*** inputTensor, DataInfo* dataInfo, TF_Status* status, unsigned int index){
-    inputTensor[0][index] = TF_NewTensor(dataInfo->dataType, 
-    dataInfo->dimensions,
-    dataInfo->numberOfDimensions,
-    dataInfo->data,
-    dataInfo->dataSize,
-    &NoOpDeallocator,
-    0);
-    if(inputTensor[0][index] == NULL){
+TFInfo dataInfoToTensor(TF_Tensor** inputTensor, DataInfo* dataInfo, TF_Status* status, unsigned int index){
+    inputTensor[index] = TF_AllocateTensor(dataInfo->dataType, dataInfo->dimensions, dataInfo->numberOfDimensions, dataInfo->dataSize);
+    memcpy(TF_TensorData(inputTensor[index]), dataInfo->data, dataInfo->dataSize);
+    if(inputTensor[index] == NULL){
         char buffer[256];
         sprintf(buffer, "Input tensor could not be created. numDims: %i, dataSize: %i, dims:[%i,%i,%i,%i]", 
         (int)dataInfo->numberOfDimensions, 
@@ -89,7 +86,6 @@ void freeTensor(TF_Tensor** tensors, unsigned int numTensors)
     {
         TF_DeleteTensor(tensors[i]);
     }
-    free(tensors);
 }
 /******************Model Information*****************/
 // outputs all the graph's operation names
