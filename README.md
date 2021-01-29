@@ -2,6 +2,13 @@
 
 This repository contains the source code to compile an image upscale dynamic library for upscaling images. The library upscales the supplied image by a factor of 2 using machine learning models. This library should compile on Linux, MacOS, and Windows. Note: GPU support is only on Linux and Windows.
 
+# Binaries
+<ul>
+  <li><a href="./product/download.html">Linux CPU</a></li>  
+  <li><a href="./product/download.html">Linux GPU</a></li>  
+  <li><a href="./product/download.html">macOS CPU</a></li> 
+</ul>
+
 # Dependencies
 
 > Tensorflow c
