@@ -12,8 +12,8 @@ const char *noiseCancelNodeNames[2]={
         };
 int64_t noiseCancelDims[1]={1}; 
 DataInfo noiseCancelDataInfo[1] = {{
-    data:"./models/noise_cancel/variables/variables",
-    dataSize: 43,
+    data:"./static_resources/models/noise_cancel/variables/variables",
+    dataSize: 60,
     dataType: TF_STRING,
     numberOfDimensions: 1,
     dimensions: noiseCancelDims,
@@ -21,7 +21,7 @@ DataInfo noiseCancelDataInfo[1] = {{
 // All supported models add to the below object
 ModelInfo supportedModels[1] = {
     {
-        directoryLocation:"./models/noise_cancel", 
+        directoryLocation:"./static_resources/models/noise_cancel", 
         inputNodeNames: noiseCancelNodeNames,
         outputNodeName:"StatefulPartitionedCall", 
         tag:"serve",
