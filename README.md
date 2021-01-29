@@ -4,8 +4,8 @@ This repository contains the source code to compile an image upscale dynamic lib
 
 # Binaries
 <ul>
-  <li><a href="./product/download.html">Linux CPU</a></li>  
-  <li><a href="./product/download.html">Linux GPU</a></li>  
+  <li><a href="https://github.com/uncharted-distil/distil-image-upscale/releases/download/1.1/image-upscale.so">Linux CPU</a></li>  
+  <li><a href="https://github.com/uncharted-distil/distil-image-upscale/releases/download/1.0/image-upscale.so">Linux GPU</a></li>  
   <li><a href="./product/download.html">macOS CPU</a></li> 
 </ul>
 
