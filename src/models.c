@@ -12,21 +12,21 @@ const char *noiseCancelNodeNames[2]={
         };
 int64_t noiseCancelDims[1]={1}; 
 DataInfo noiseCancelDataInfo[1] = {{
-    data:"./static_resources/models/noise_cancel/variables/variables",
-    dataSize: 60,
-    dataType: TF_STRING,
-    numberOfDimensions: 1,
-    dimensions: noiseCancelDims,
+    .data="./static_resources/models/noise_cancel/variables/variables",
+    .dataSize= 60,
+    .dataType= TF_STRING,
+    .numberOfDimensions= 1,
+    .dimensions= noiseCancelDims,
 }};
 // All supported models add to the below object
 ModelInfo supportedModels[1] = {
     {
-        directoryLocation:"./static_resources/models/noise_cancel", 
-        inputNodeNames: noiseCancelNodeNames,
-        outputNodeName:"StatefulPartitionedCall", 
-        tag:"serve",
-        numInputNodes:2,
-        staticInputData: noiseCancelDataInfo,
-        numStaticInputData:1, // should always be numInputNodes - 1 for noise_cancel
+        .directoryLocation="./static_resources/models/noise_cancel", 
+        .inputNodeNames= noiseCancelNodeNames,
+        .outputNodeName="StatefulPartitionedCall", 
+        .tag="serve",
+        .numInputNodes=2,
+        .staticInputData= noiseCancelDataInfo,
+        .numStaticInputData=1, // should always be numInputNodes - 1 for noise_cancel
     }
 };

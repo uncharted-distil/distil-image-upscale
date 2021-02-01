@@ -15,7 +15,7 @@ TF_Code logStatus(TFInfo info, const char* taskMessage) {
 // helper function for debugging
 TFInfo newTFInfo(TF_Status* status, TF_Code code, const char* msg){
         TF_SetStatus(status, code, msg);
-        return (TFInfo){code:code, status:status};
+        return (TFInfo){.code=code, .status=status};
 }
 /******************Data & Model Runtime*****************/
 // noOperation function to disable tensorflow from deleting data memory, this responsibility is left to us
@@ -28,7 +28,7 @@ TFInfo loadModel(Model* model, const char* modelDirectory, const char* tags){
     int ntags = 1;
     model->session = TF_LoadSessionFromSavedModel(model->sessionOptions, model->runOptions,
      modelDirectory, &tags, ntags, model->graph, NULL, model->status);
-    return (TFInfo){code:TF_GetCode(model->status), status:model->status};  
+    return (TFInfo){.code=TF_GetCode(model->status), .status=model->status};  
 }
 
 TFInfo dataInfoToTensor(TF_Tensor** inputTensor, DataInfo* dataInfo, TF_Status* status, unsigned int index){
@@ -56,7 +56,7 @@ TFInfo run(Model* model, ModelInfo* modelInfo,TF_Tensor** tensor, TF_Tensor** ou
     outputTensor, 1, // assumes 1 output tensor
     NULL, 0, NULL, model->status);
 
-return(TFInfo){code:TF_GetCode(model->status), status: model->status};
+return(TFInfo){.code=TF_GetCode(model->status), .status=model->status};
 }
 /******************Model Management*****************/
 // create and initialize model to default values must call freeModel when done with returned instance
@@ -121,5 +121,5 @@ TFInfo findModelNodes(Model* model, ModelInfo* modelInfo){
     {
        return newTFInfo(model->status, TF_ABORTED, "could not find output node"); 
     }
-    return (TFInfo){code:TF_OK, status:NULL};
+    return (TFInfo){.code=TF_OK, .status=NULL};
 }
