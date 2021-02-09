@@ -92,16 +92,18 @@ const (
 	C_NOISE_CANCEL ModelType = iota
 	C_GAN
 )
+// GetModelType returns the current supported types and prevents wrong indexing
 func GetModelType(val int) ModelType {
 	switch val {
 	case 0:
 		return C_NOISE_CANCEL
 	case 1:
 		return C_GAN
-	case default:
+	default:
 		return C_GAN
 	}
 }
+
 // LoadImageUpscaleLibrary loads the model for image upscaling
 func LoadImageUpscaleLibrary() error {
 	// buffer to hold error messages
