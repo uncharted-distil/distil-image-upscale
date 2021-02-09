@@ -1,5 +1,5 @@
 #pragma once
-#include <tensorflow/c/c_api.h>
+#include "../include/tensorflow/c/c_api.h"
 
 // TF_Info used to hold status and error codes from tensorflow
 typedef struct TF_Info{
