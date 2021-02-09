@@ -1,4 +1,4 @@
-module github.com/uncharted-distil/distil-image-upscale/c_util
+module github.com/uncharted-distil/distil-image-upscale
 
 go 1.13
 
