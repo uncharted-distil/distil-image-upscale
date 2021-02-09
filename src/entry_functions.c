@@ -18,7 +18,7 @@ void initialize(char* errorMsg){
         strcpy(errorMsg, TF_Message(check.status));
         return;
     }
-    check = findModelNodes(model[NoiseCancel], modelInfo);
+    check = findModelNodes(model[NoiseCancel], modelInfo[NoiseCancel]);
     if(check.code)
     {
         freeModel(model[NoiseCancel]); // free memory from model
@@ -29,14 +29,14 @@ void initialize(char* errorMsg){
     model[GAN] = newModel();
     // get NoiseCancel model info (currently only supported model)
     modelInfo[GAN] = &supportedModels[GAN];
-    TFInfo check = loadModel(model[GAN], modelInfo[GAN]->directoryLocation, modelInfo[GAN]->tag);
+    check = loadModel(model[GAN], modelInfo[GAN]->directoryLocation, modelInfo[GAN]->tag);
     if(check.code)
     {
         freeModel(model[GAN]); // free memory from model
         strcpy(errorMsg, TF_Message(check.status));
         return;
     }
-    check = findModelNodes(model[GAN], modelInfo);
+    check = findModelNodes(model[GAN], modelInfo[GAN]);
     if(check.code)
     {
         freeModel(model[GAN]); // free memory from model
