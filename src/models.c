@@ -17,14 +17,14 @@ const char *ganNodeNames[2]={
 };
 int64_t noiseCancelDims[1]={1}; 
 DataInfo noiseCancelDataInfo[1] = {{
-    .data="..models/noise_cancel/variables/variables",
+    .data="./static_resources/models/noise_cancel/variables/variables",
     .dataSize= 60,
     .dataType= TF_STRING,
     .numberOfDimensions= 1,
     .dimensions= noiseCancelDims,
 }};
 DataInfo ganDataInfo[1] = {{
-    .data="../models/gan_model/variables/variables",
+    .data="./static_resources/models/gan_model/variables/variables",
     .dataSize= 60,
     .dataType= TF_STRING,
     .numberOfDimensions= 1,
@@ -33,7 +33,7 @@ DataInfo ganDataInfo[1] = {{
 // All supported models add to the below object
 ModelInfo supportedModels[2] = {
     {
-        .directoryLocation="../models/noise_cancel", 
+        .directoryLocation="./static_resources/models/noise_cancel", 
         .inputNodeNames= noiseCancelNodeNames,
         .outputNodeName="StatefulPartitionedCall", 
         .tag="serve",
@@ -42,7 +42,7 @@ ModelInfo supportedModels[2] = {
         .numStaticInputData=1, // should always be numInputNodes - 1 for noise_cancel
     }, 
     {
-        .directoryLocation="../models/gan_model", 
+        .directoryLocation="./static_resources/models/gan_model", 
         .inputNodeNames= ganNodeNames,
         .outputNodeName="StatefulPartitionedCall", 
         .tag="serve",
