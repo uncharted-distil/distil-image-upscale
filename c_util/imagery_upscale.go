@@ -2,9 +2,10 @@ package c_util
 
 /*
 #cgo CFLAGS: -I ../include
-#cgo linux LDFLAGS: -L ../lib/linux -ltensorflow
-#cgo darwin LDFLAGS: -L ../lib/darwin -ltensorflow
-#cgo windows LDFLAGS: -L ../lib/windows -ltensorflow
+#cgo linux LDFLAGS: -ltensorflow
+#cgo darwin LDFLAGS: -ltensorflow
+#cgo windows CFLAGS: -IC:/usr/local/include
+#cgo windows LDFLAGS: -ltensorflow -LC:/usr/local/lib
 #include "../src/entry_functions.c"
 #include <stdio.h>
 float *buffer;
