@@ -79,9 +79,11 @@ import "C"
 import (
 	"fmt"
 	"image"
+	"image/draw"
 	"math"
 	"unsafe"
 
+	"github.com/disintegration/imaging"
 	"github.com/pkg/errors"
 	log "github.com/unchartedsoftware/plog"
 )
@@ -193,8 +195,8 @@ func encodeToImage(dimension [2]int, buffer *C.float) *image.RGBA {
 	min := 0.0
 	max := 1.0
 	maxValue := 255.0
-	for y := 0; y < dimension[1]; y++ {
-		for x := 0; x < dimension[0]; x++ {
+	for x := 0; x < dimension[0]; x++ {
+		for y := 0; y < dimension[1]; y++ {
 			cX := C.int(x)
 			cY := C.int(y)
 			// gets index based on rowMajor contiguous memory
@@ -213,5 +215,9 @@ func encodeToImage(dimension [2]int, buffer *C.float) *image.RGBA {
 			idx += step
 		}
 	}
+
+	tImg := imaging.Transpose(img)
+	draw.Draw(img, img.Bounds(), tImg, tImg.Bounds().Min, draw.Src)
 	return img
 }
+
