@@ -108,12 +108,12 @@ func GetModelType(val int) ModelType {
 }
 
 // LoadImageUpscaleLibrary loads the model for image upscaling
-func LoadImageUpscaleLibrary() error {
+func LoadImageUpscaleLibrary(model int) error {
 	// buffer to hold error messages
 	buffer := make([]byte, 256)
 	errorMsg := (*C.char)(unsafe.Pointer(&buffer[0]))
 	// loads the models into memory
-	C.initialize(errorMsg)
+	C.initialize(errorMsg, GetModelType(model))
 
 	goErrMsg := C.GoString(errorMsg)
 	// if errorMsg is empty initialize was successful

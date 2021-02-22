@@ -6,40 +6,22 @@
 Model* model[NUM_SUPPORTED_MODELS];
 ModelInfo* modelInfo[NUM_SUPPORTED_MODELS];
 
-void initialize(char* errorMsg){
+void initialize(char* errorMsg, ModelTypes type){
     // create model
-    model[NoiseCancel] = newModel();
+    model[type] = newModel();
     // get NoiseCancel model info (currently only supported model)
-    modelInfo[NoiseCancel] = &supportedModels[NoiseCancel];
-    TFInfo check = loadModel(model[NoiseCancel], modelInfo[NoiseCancel]->directoryLocation, modelInfo[NoiseCancel]->tag);
+    modelInfo[type] = &supportedModels[type];
+    TFInfo check = loadModel(model[type], modelInfo[type]->directoryLocation, modelInfo[type]->tag);
     if(check.code)
     {
-        freeModel(model[NoiseCancel]); // free memory from model
+        freeModel(model[type]); // free memory from model
         strcpy(errorMsg, TF_Message(check.status));
         return;
     }
-    check = findModelNodes(model[NoiseCancel], modelInfo[NoiseCancel]);
+    check = findModelNodes(model[type], modelInfo[type]);
     if(check.code)
     {
-        freeModel(model[NoiseCancel]); // free memory from model
-        strcpy(errorMsg, TF_Message(check.status));
-        return;
-    }
-    // create GAN model
-    model[GAN] = newModel();
-    // get NoiseCancel model info (currently only supported model)
-    modelInfo[GAN] = &supportedModels[GAN];
-    check = loadModel(model[GAN], modelInfo[GAN]->directoryLocation, modelInfo[GAN]->tag);
-    if(check.code)
-    {
-        freeModel(model[GAN]); // free memory from model
-        strcpy(errorMsg, TF_Message(check.status));
-        return;
-    }
-    check = findModelNodes(model[GAN], modelInfo[GAN]);
-    if(check.code)
-    {
-        freeModel(model[GAN]); // free memory from model
+        freeModel(model[type]); // free memory from model
         strcpy(errorMsg, TF_Message(check.status));
         return;
     }
@@ -102,7 +84,6 @@ void freeOutputData(OutputData *outputData){
     free(outputData);
 }
 
-void cleanup(){
-    freeModel(model[NoiseCancel]);
-    freeModel(model[GAN]);
+void cleanup(ModelTypes type){
+    freeModel(model[type]);
 }
