@@ -79,11 +79,9 @@ import "C"
 import (
 	"fmt"
 	"image"
-	"image/draw"
 	"math"
 	"unsafe"
 
-	"github.com/disintegration/imaging"
 	"github.com/pkg/errors"
 	log "github.com/unchartedsoftware/plog"
 )
@@ -95,6 +93,7 @@ const (
 	C_NOISE_CANCEL ModelType = iota
 	C_GAN
 )
+
 // GetModelType returns the current supported types and prevents wrong indexing
 func GetModelType(val int) ModelType {
 	switch val {
@@ -158,7 +157,7 @@ func UpscaleImage(img *image.RGBA, modelType ModelType) *image.RGBA {
 	y := C.getValueI64(output.dimension, 2)
 	x := C.getValueI64(output.dimension, 1)
 	// encode raw into go *image.RGBA
-	newImg := encodeToImage([2]int{int(y), int(x)}, output.buffer)
+	newImg := encodeToImage([2]int{int(x), int(y)}, output.buffer)
 	C.freeOutputData(output)
 	return newImg
 }
@@ -195,8 +194,8 @@ func encodeToImage(dimension [2]int, buffer *C.float) *image.RGBA {
 	min := 0.0
 	max := 1.0
 	maxValue := 255.0
-	for x := 0; x < dimension[0]; x++ {
-		for y := 0; y < dimension[1]; y++ {
+	for y := 0; y < dimension[1]; y++ {
+		for x := 0; x < dimension[0]; x++ {
 			cX := C.int(x)
 			cY := C.int(y)
 			// gets index based on rowMajor contiguous memory
@@ -215,9 +214,5 @@ func encodeToImage(dimension [2]int, buffer *C.float) *image.RGBA {
 			idx += step
 		}
 	}
-
-	tImg := imaging.Transpose(img)
-	draw.Draw(img, img.Bounds(), tImg, tImg.Bounds().Min, draw.Src)
 	return img
 }
-

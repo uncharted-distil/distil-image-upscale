@@ -28,7 +28,7 @@ func loadImage(filename string) (*image.RGBA, error) {
 
 // TestInit tests the init function for the c code (which loads the models and introspects them)
 func TestInit(t *testing.T) {
-	err := LoadImageUpscaleLibrary()
+	err := LoadImageUpscaleLibrary(GetModelType(0))
 	if err != nil {
 		t.Fatal(err)
 	}
